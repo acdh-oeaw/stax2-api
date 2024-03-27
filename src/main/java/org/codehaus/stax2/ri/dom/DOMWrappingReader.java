@@ -959,7 +959,7 @@ public abstract class DOMWrappingReader
              * instead of Document or DocumentFragment). If so, it'll
              * be END_DOCUMENT:
              */
-            if (_currNode == _rootNode) {
+            if (_currNode.isSameNode(_rootNode)) {
                 return (_currEvent = END_DOCUMENT);
             }
             // Otherwise need to fall through to default handling:
@@ -979,13 +979,21 @@ public abstract class DOMWrappingReader
                  * return END_ELEMENT (if parent is element) or
                  * END_DOCUMENT (if not; needs to be root, then)
                  */
+                Node childNode = _currNode;
                 _currNode = _currNode.getParentNode();
+                /*
+                 * null parent may be a hint that the top node is reached (BaseX)
+                 */
+                if (null == _currNode &&
+                        childNode.isSameNode(_rootNode)) {
+                    return (_currEvent = END_DOCUMENT);
+                }
                 int type = _currNode.getNodeType();
                 if (type == Node.ELEMENT_NODE) {
                     return (_currEvent = END_ELEMENT);
                 }
                 // Let's do sanity check; should really be Doc/DocFragment
-                if (_currNode != _rootNode ||
+                if (!_currNode.isSameNode(_rootNode) ||
                     (type != Node.DOCUMENT_NODE && type != Node.DOCUMENT_FRAGMENT_NODE)) {
                     throw new XMLStreamException("Internal error: non-element parent node ("+type+") that is not the initial root node");
                 }
@@ -2195,7 +2203,8 @@ public abstract class DOMWrappingReader
         NamedNodeMap attrsIn = _currNode.getAttributes();
 
         // A common case: neither attrs nor ns decls, can use short-cut
-        int len = attrsIn.getLength();
+        // Implementataion may not return a NameNodeMap if there are no attributes (BaseX)
+        int len = null == attrsIn ? 0 : attrsIn.getLength();
         if (len == 0) {
             _attrList = Collections.emptyList();
             _nsDeclList = Collections.emptyList();
