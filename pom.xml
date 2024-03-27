@@ -42,7 +42,7 @@
   <properties>
       <!-- 1.6 baseline for 4.0 (earlier only required 1.5) -->
       <javac.src.version>1.6</javac.src.version>
-      <javac.target.version>1.6</javac.target.version>
+      <javac.target.version>1.7</javac.target.version>
 
       <!-- 4.1 adds "Automatic-Module-Name" for JDK 9 -->
       <jdk.module.name>org.codehaus.stax2</jdk.module.name>
