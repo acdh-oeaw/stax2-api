@@ -57,8 +57,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.5.1</version>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>1.7</source>
+          <target>1.7</target>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
           <optimize>true</optimize>
@@ -97,8 +97,8 @@
           <!-- 06-Jul-2013, tatu: When can we switch to 1.6?
             -->
           <configuration>
-            <source>1.5</source>
-            <target>1.5</target>
+            <source>1.7</source>
+            <target>1.7</target>
             <encoding>UTF-8</encoding>
             <doclint>none</doclint>
             <links>
