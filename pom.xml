@@ -9,7 +9,7 @@
   <groupId>org.codehaus.woodstox</groupId>
   <artifactId>stax2-api</artifactId>
   <name>Stax2 API</name>
-  <version>3.1.4</version>
+  <version>3.1.5</version>
   <packaging>bundle</packaging>
   <description>tax2 API is an extension to basic Stax 1.0 API that adds significant new functionality, such as full-featured bi-direction validation interface and high-performance Typed Access API.
   </description>
@@ -38,7 +38,6 @@
     <name>fasterxml.com</name>
     <url>http://fasterxml.com</url>
   </organization>
-
   <dependencies>
     <!-- Stax API jar is needed; 1.0-2 seems to be the last "official"
          version prior to JDK 6 that bundles API
@@ -94,13 +93,14 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.6.1</version>
+          <version>3.0.0</version>
           <!-- 06-Jul-2013, tatu: When can we switch to 1.6?
             -->
           <configuration>
             <source>1.5</source>
             <target>1.5</target>
             <encoding>UTF-8</encoding>
+            <doclint>none</doclint>
             <links>
               <link>http://java.sun.com/javase/6/docs/api/</link>
             </links>
@@ -126,7 +126,8 @@
               <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
               <Bundle-Vendor>fasterml.com</Bundle-Vendor>
               <Import-Package>
-javax.xml.namespace
+javax.xml
+,javax.xml.namespace
 ,javax.xml.stream
 ,javax.xml.stream.events
 ,javax.xml.stream.util
@@ -155,6 +156,14 @@ org.codehaus.stax2
             </instructions>
           </configuration>
         </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
